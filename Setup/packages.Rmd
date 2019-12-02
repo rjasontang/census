@@ -1,0 +1,40 @@
+---
+title: "packages"
+author: "Jason Tang"
+date: "12/1/2019"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+---
+
+## R Markdown
+
+Some packages
+
+```{r packages, message=FALSE}
+library(tidycensus)
+library(tidyverse)
+library(sf)
+library(tmap)
+```
+
+## Get data
+
+```{r}
+v17 <- load_variables(year = 2017, dataset = "acs5")
+```
+
+
+```{r data, message=FALSE, warning=FALSE, results='hide'}
+ca_counties <- get_acs(geography = "county", variables = "B01001_001", year = 2017, state = "CA", geometry = TRUE)
+```
+
+## magic of tmap
+
+```{r}
+tm_shape(ca_counties) + 
+  tm_polygons("estimate")
+```
+
